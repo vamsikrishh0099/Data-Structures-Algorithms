@@ -1,2 +1,2 @@
 # Data-Structures-Algorithms
-My solutions to leetcode Questions.
+My solutions to LeetCode Questions.
