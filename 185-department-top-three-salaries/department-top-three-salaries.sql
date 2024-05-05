@@ -8,7 +8,7 @@ SELECT
 D.NAME AS Department,  E1.NAME AS EMPLOYEE, E1.Salary
 FROM EMPLOYEE E1 INNER JOIN EMPLOYEE E2 ON E1.Salary <= E2.Salary AND
  E1.DepartmentID = E2.DepartmentID JOIN Department D ON D.ID = E1.DepartmentID
- GROUP BY E1.NAME, D.NAME HAVING COUNT(distinct E2.SALARY) < 4 
+ GROUP BY D.NAME,E1.NAME HAVING COUNT(distinct E2.SALARY) < 4 
 # using dense RANK 
 # with temp as (
 # select  emp.name as employee_name, dp.name, emp.salary, dense_rank() 
