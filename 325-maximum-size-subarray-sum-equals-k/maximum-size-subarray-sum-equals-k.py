@@ -10,14 +10,14 @@ class Solution:
 
         for i, num in enumerate(prefixsum):
             if num in mp:
-                mp[num].append(i)
+                mp[num] = min(i, mp[num])
             else:
-                mp[num] = [i]
+                mp[num] = i
             
         for i, num in enumerate(prefixsum):
             complement = num - k
             if complement in mp:
-                lowest_index = min(mp[complement])
+                lowest_index = mp[complement]
                 if lowest_index < i:
                     ans = max(ans, i - lowest_index)
         
