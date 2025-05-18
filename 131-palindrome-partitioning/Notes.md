@@ -1,1 +1,1 @@
-<h2>palindrome-partitioning Notes</h2><hr>[ Time taken: 15 hrs 12 m 12 s ]
+<h2>palindrome-partitioning Notes</h2><hr>[ Time taken: 15 m 13 s ]
