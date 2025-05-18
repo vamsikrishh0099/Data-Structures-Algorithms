@@ -1,31 +1,24 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
 
-        candidates.sort()
-        ans = set()
-        self.helper(candidates, 0, 0, target, [], ans)
-        return list(ans)
+        ans = []
+        cur = []
 
-    def helper(self, candidates, ind, cursum, target, ds, ans) -> None:
+        self.helper(0, candidates, target, cur, ans)
 
-        if cursum == target:
-            sorted_ans = ds.copy()
-            sorted_ans.sort()
-            ans.add(tuple(sorted_ans))
+        return ans
+
+    def helper(self, ind, candidates, target, cur, ans):
+
+        if ind == len(candidates):
+            if target == 0:
+                ans.append(cur.copy())
+            return 
+        if target < 0:
             return
 
-        if cursum > target or ind == len(candidates):
-            return
+        cur.append(candidates[ind])
+        self.helper(ind, candidates, target - candidates[ind], cur, ans)
+        cur.pop()
 
-        # for i in range(len(candidates)):
-        #     num = candidates[i]
-        #     ds.append(num)
-        #     self.helper(candidates, cursum + num, target, ds, ans)
-        #     ds.pop()
-        num = candidates[ind]
-        ds.append(num)
-        self.helper(candidates, ind, cursum + num, target, ds, ans)
-        ds.pop()
-        self.helper(candidates, ind + 1, cursum, target, ds, ans)
-
-        return
+        self.helper(ind + 1, candidates, target, cur, ans)
