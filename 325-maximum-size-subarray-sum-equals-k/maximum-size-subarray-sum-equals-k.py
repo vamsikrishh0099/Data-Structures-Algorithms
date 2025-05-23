@@ -22,6 +22,3 @@ class Solution:
                     ans = max(ans, i - lowest_index)
         
         return ans
-
-[1,-1,5,-2,3]
-[0,1,0,5,3,6]
