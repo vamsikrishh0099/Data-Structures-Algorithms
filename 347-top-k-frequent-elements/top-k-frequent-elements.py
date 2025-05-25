@@ -7,12 +7,24 @@ class Solution:
             mp[num] = mp.get(num, 0) + 1
 
         
-        for key,v in mp.items():
-            sorted_list.append((v,key))
+        # for key,v in mp.items():
+        #     sorted_list.append((v,key))
 
-        sorted_list.sort(key = lambda x: x[0], reverse = True)
+        # sorted_list.sort(key = lambda x: x[0], reverse = True)
+
+        # for i in range(k):
+        #     ans.append(sorted_list[i][1])
+
+        # return ans
+        pq = []
+
+        for num, counts in mp.items():
+            
+            heapq.heappush(pq, (counts, num))
+            if len(pq) > k:
+                heapq.heappop(pq)
 
         for i in range(k):
-            ans.append(sorted_list[i][1])
+            ans.append(heapq.heappop(pq)[1])
 
         return ans
