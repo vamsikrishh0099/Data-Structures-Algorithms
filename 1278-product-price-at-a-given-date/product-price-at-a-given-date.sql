@@ -1,49 +1,11 @@
-# Write your MySQL query statement below
-
-with cte as (
-select product_id, new_price, rank() over(partition by product_id order by change_date desc) as rnk 
- from PRODUCTS 
-WHERE change_date <= '2019-08-16'
+-- Write your PostgreSQL query statement below
+WITH TT AS (
+SELECT 
+PRODUCT_ID, new_price, rank() over (partition by product_id order by change_date desc) as rnk 
+FROM PRODUCTS WHERE CHANGE_DATE <= '2019-08-16'
+),
+t2 as (
+    select * from tt where rnk = 1
 )
-select product_id, new_price as price from cte where rnk = 1 
-union
-select product_id, 10 as price from products 
-group by product_id having min(change_date) > '2019-08-16'
-# select ttt3.product_id, ifnull(tt2.new_price,10) as price from 
-# (
-# select tt.product_id, tt.new_price, tt.change_date, tt.rnk
-# from(
-# select *,rank() over(partition by product_id order by change_date desc) as rnk from products where datediff(change_date,"2019-08-16") <=0
-# ) tt 
-#  where tt.rnk = 1
-# ) tt2
-# right join (select distinct product_id  from products) ttt3
-# on ttt3.product_id = tt2.product_id;
-
-
-
-
-
-
-
-
-
-
--- select x2.product_id, ifnull(tt.price,10) as price
--- from (select distinct product_id from products) x2
--- left join
--- (
---  SELECT DISTINCT
---       product_id,
---       FIRST_VALUE (new_price) OVER (
---         PARTITION BY
---           product_id
---         ORDER BY
---           change_date DESC
---       ) AS price
---     FROM
---       Products
---        WHERE
---       change_date <= '2019-08-16'
--- ) tt
--- on tt.product_id = x2.product_id;
+SELECT P.PRODUCT_ID, COALESCE(t2.NEW_PRICE, 10) AS PRICE FROM (select distinct product_id as product_id from PRODUCTS) P 
+LEFT JOIN t2 ON P.PRODUCT_ID = t2.PRODUCT_ID
