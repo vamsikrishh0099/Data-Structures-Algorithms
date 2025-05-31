@@ -1,6 +1,25 @@
-# Write your MySQL query statement below
+-- Write your PostgreSQL query statement below
 
+-- WITH TT AS (
+-- SELECT 
+--     ID,
+--     RECORDDATE, 
+--     TEMPERATURE,
+--     LAG(TEMPERATURE) OVER(ORDER BY RECORDDATE) AS PREV_TEMP
+-- FROM 
+--     WEATHER
+-- )
+-- SELECT ID FROM TT WHERE TEMPERATURE > PREV_TEMP
 
-select W1.id
-from weather w1 join weather w2 
-on w1.recordDate = W2.recordDate + INTERVAL 1 DAY where w1.temperature > w2.temperature
+WITH TT AS (
+SELECT 
+    T1.ID,
+    T1.RECORDDATE, 
+    T2.RECORDDATE,
+    T1.TEMPERATURE AS TEMP1,
+    T2.TEMPERATURE AS TEMP2
+FROM 
+    WEATHER T1 JOIN WEATHER T2 ON T1.RECORDDATE = T2.RECORDDATE + 1
+)
+SELECT ID FROM TT
+WHERE temp1 > temp2
