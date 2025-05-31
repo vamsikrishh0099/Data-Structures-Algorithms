@@ -3,7 +3,8 @@ class SparseVector:
         self.vector_map = {}
 
         for i,num in enumerate(nums):
-            self.vector_map[i] = num
+            if num != 0:
+                self.vector_map[i] = num
 
         
 
