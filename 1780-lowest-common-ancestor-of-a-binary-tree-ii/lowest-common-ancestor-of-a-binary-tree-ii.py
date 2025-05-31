@@ -32,14 +32,14 @@ class Solution:
             return root 
 
         elif l :
-            if (l == p and root == q) or (l == q and root == p):
+            if (l is p and root is q) or (l is q and root is p):
                 found[0] = True
                 return root
             else:
                 return l
             
         elif r :
-            if (r == p and root == q) or (r == q and root == p):
+            if (r is p and root is q) or (r is q and root is p):
                 found[0] = True
                 return root
             else:
