@@ -1,0 +1,48 @@
+-- Write your PostgreSQL query statement below
+
+SELECT 
+to_char(trans_date, 'YYYY-MM') as month,
+COUNTRY,
+COUNT(*) AS TRANS_COUNT,
+ SUM(CASE WHEN STATE = 'approved' then 1 else 0 end) APPROVED_COUNT,
+ SUM(amount) TRANS_TOTAL_AMOUNT,
+ SUM(CASE WHEN STATE = 'approved' then amount else 0 end) APPROVED_TOTAL_AMOUNT
+FROM TRANSACTIONS 
+GROUP BY COUNTRY, month
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- WITH TT AS (
+--     SELECT *, MONTH(TRANS_DATE) AS MON, YEAR(TRANS_DATE) AS YR FROM TRANSACTIONS
+-- )
+-- SELECT 
+--     TT.YR, 
+--     TT.MON, 
+--     TT.COUNTRY,  
+--     COUNT(TT.ID) AS TRANS_COUNT, 
+--     SUM(TT.AMOUNT) AS TRANS_TOTAL_AMOUNT,
+--     SUM(CASE WHEN TT.STATE = 'approved' THEN 1 ELSE 0 end) AS APPROVED_TOTAL_COUNT,
+--     SUM(CASE WHEN TT.STATE = 'approved' THEN TT.AMOUNT ELSE 0 end) AS APPROVED_TOTAL_AMOUNT
+-- FROM TT 
+-- GROUP BY TT.YR, TT.MON, TT.COUNTRY
