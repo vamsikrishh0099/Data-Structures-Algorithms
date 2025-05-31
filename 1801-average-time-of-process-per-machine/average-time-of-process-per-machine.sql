@@ -1,13 +1,16 @@
+-- Write your PostgreSQL query statement below
 
-with tt as (
-    select machine_id, process_id, activity_type,
-    round(timestamp - lag(timestamp) over(partition by machine_id, process_id order by timestamp),3)  as dif,
-    count( process_id) over(partition by machine_id,process_id) as num_processes
-from
-    activity 
-)
- select 
-machine_id, round(sum(dif)/count(*),3) as processing_time 
-from tt 
-where tt.activity_type='end'
-group by machine_id;
+-- SELECT
+-- A1.MACHINE_ID,
+-- ROUND(AVG(A2.TIMESTAMP - A1.TIMESTAMP)::DECIMAL, 3) AS PROCESSING_TIME
+-- FROM ACTIVITY A1 JOIN ACTIVITY A2 
+-- ON A1.MACHINE_ID = A2.MACHINE_ID AND A1.PROCESS_ID = A2.PROCESS_ID AND A1.ACTIVITY_TYPE = 'start'
+-- AND A2.ACTIVITY_TYPE = 'end'
+-- group by A1.MACHINE_ID
+
+
+SELECT
+MACHINE_ID,
+round((SUM(CASE WHEN ACTIVITY_TYPE='start' then -timestamp else timestamp end)/(count(distinct process_id)))::decimal,3) as processing_time
+FROM ACTIVITY 
+GROUP BY MACHINE_ID
