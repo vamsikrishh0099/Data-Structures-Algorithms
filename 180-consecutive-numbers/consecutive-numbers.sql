@@ -1,0 +1,10 @@
+-- Write your PostgreSQL query statement below
+WITH TT AS 
+(SELECT
+    ID,
+    NUM,
+    LAG(NUM) OVER(ORDER BY ID) AS PREV,
+    LEAD(NUM) OVER(ORDER BY ID) AS NEXT
+FROM LOGS
+)
+SELECT DISTINCT NUM AS ConsecutiveNums FROM TT WHERE NUM = PREV AND NUM = NEXT;
