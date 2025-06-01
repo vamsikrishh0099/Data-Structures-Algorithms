@@ -1,7 +1,15 @@
-# Write your MySQL query statement below
-
-
-select p.product_id, IFNULL(round(sum(u.units*p.price)/(sum(u.units)),2),0) as average_price from prices p 
-left join unitssold u on p.product_id = u.product_id and u.purchase_date between p.start_date
-and p.end_date 
-group by p.product_id
+-- Write your PostgreSQL query statement below
+WITH TT AS (
+SELECT 
+P.PRODUCT_ID, 
+P.PRICE, 
+US.UNITS AS UNITS
+FROM PRICES P LEFT JOIN UNITSSOLD US 
+    ON P.PRODUCT_ID = US.PRODUCT_ID AND US.PURCHASE_DATE BETWEEN P.START_DATE AND P.END_DATE
+)
+--select * from tt; 
+SELECT 
+    tt.product_id, 
+    coalesce(round((sum(tt.units*tt.price)/(sum(tt.units)*1.0)),2), 0) as average_price
+FROM TT 
+    GROUP BY TT.PRODUCT_ID
