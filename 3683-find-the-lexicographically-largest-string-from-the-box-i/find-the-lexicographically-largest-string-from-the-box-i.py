@@ -18,16 +18,14 @@ class Solution:
                 max_char = c
         all_ans = []
 
+        best = ""
         for i in range(n):
             if word[i] == max_char:
-                all_ans.append(word[i:i + ans_size])
+                if best < word[i:i+ans_size]:
+                    best = word[i:i+ans_size]
                 
         
-        if len(all_ans) == 1:
-            return all_ans[0]
-        
-        all_ans.sort(reverse = True)
-        return all_ans[0]
+        return best
 
 
 
