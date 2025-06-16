@@ -11,14 +11,13 @@ class Solution:
         """
 
         sorteda = sorted(nums1, reverse = True)
-        sortedb = sorted(enumerate(nums2), key=lambda x: (x[1], x[0]), reverse=True)  # descending order with original index
-
+        sortedb = sorted([(num, i) for i,num in enumerate(nums2)], reverse = True)
 
         ans = [-1]*len(nums2)
 
         a_ind = 0
 
-        for i, (org_ind, target) in enumerate(sortedb):
+        for i, (target, org_ind) in enumerate(sortedb):
             if sorteda[a_ind] > target:
                 ans[org_ind] = sorteda[a_ind]
                 a_ind += 1
