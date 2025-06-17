@@ -1,1 +1,1 @@
-<h2>meeting-rooms-ii Notes</h2><hr>[ Time taken: 30 m 40 s ]
+<h2>meeting-rooms-ii Notes</h2><hr>[ Time taken: 5 m 54 s ]
