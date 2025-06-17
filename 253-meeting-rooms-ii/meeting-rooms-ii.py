@@ -1,19 +1,26 @@
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        """
+        sort the input by start time.
+        pq.
+        insert end times into pq as you iterate. 
+        for every num, check if top is less than current meeting start.
+        if yes, pop and insert new meeting end
+        if no, just insert new meeting end 
+        ans = max(ans, len(pq))
+        """
+
         pq = []
-
-        intervals.sort(key=lambda x: x[0])
-        heapq.heappush(pq, intervals[0][1])
         ans = 0
-        for i in range(1, len(intervals)):
-            meeting = intervals[i]
+        intervals.sort(key = lambda x: x[0])
 
-            if pq[0] <= meeting[0]:
+        for interval in intervals:
+            if pq and pq[0] <= interval[0]:
                 heapq.heappop(pq)
-                heapq.heappush(pq, meeting[1])
+            
+            heapq.heappush(pq, interval[1])
 
-            else:
-                ans += 1
-                heapq.heappush(pq, meeting[1])
+            ans = max(ans, len(pq))
 
-        return len(pq)
+        return max(ans, len(pq))
+            
