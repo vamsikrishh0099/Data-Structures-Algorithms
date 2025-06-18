@@ -1,13 +1,12 @@
 -- Write your PostgreSQL query statement below
-WITH TT AS (
-    SELECT 
-        a.player_id, 
-        A.EVENT_DATE,
-        B.EVENT_DATE AS NEXT_DATE,
-        RANK() OVER(PARTITION BY A.PLAYER_ID ORDER BY A.EVENT_DATE) AS RNK
-    FROM ACTIVITY A left JOIN ACTIVITY B 
-    ON A.PLAYER_ID = B.PLAYER_ID AND A.EVENT_DATE = B.EVENT_DATE - 1
+with first_login as (select * from (
+select
+*,
+rank() over(partition by player_id order by event_date) as rnk
+from activity 
+) where rnk = 1
 )
-SELECT 
-    round((sum(case when next_date is null then 0 else 1 end)*1.0)/(select count(distinct player_id) from activity),2) as fraction
-FROM TT WHERE RNK = 1
+select round(count(distinct a.player_id)::numeric/(select count(distinct player_id) from activity),2) as fraction
+ from first_login a 
+join activity b on a.player_id = b.player_id and 
+a.event_date = b.event_date - 1
