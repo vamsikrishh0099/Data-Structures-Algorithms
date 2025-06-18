@@ -1,7 +1,15 @@
 -- Write your PostgreSQL query statement below
-WITH RANKED_SALES AS (
-SELECT 
-*, RANK() OVER(PARTITION BY PRODUCT_ID ORDER BY YEAR) AS RNK
-FROM SALES S 
+with first_year as (
+    select
+    product_id,
+    min(year) as yr
+    from sales 
+    group by product_id
 )
-SELECT PRODUCT_ID, YEAR AS FIRST_YEAR, QUANTITY, PRICE FROM RANKED_SALES WHERE RNK = 1
+select
+    s.product_id,
+    s.year as first_year,
+    quantity as quantity,
+    price as price
+from sales s join first_year a 
+on s.product_id = a.product_id and s.year = a.yr
