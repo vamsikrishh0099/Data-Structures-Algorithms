@@ -4,17 +4,18 @@ class Solution:
         using BFS.
         if you can color a graph such that no 2 adjacent nodes have same color -> bipartite
 
+        NOTE: The graph can have disjoint components.
+        Therefore, add a loop and start BFS for each component.
+
         """
 
         n = len(graph)
         colors = [-1] * n
 
-        
         def bfs(i):
 
             q = deque()
             n = len(graph)
-            
 
             q.append((i, 0))
             colors[i] = 0
@@ -39,9 +40,25 @@ class Solution:
 
             return True
 
+
+        def dfs(i, color):
+
+            colors[i] = color
+
+
+            for neigh in graph[i]:
+                if colors[neigh] == -1:
+                    if dfs(neigh, 1 - color) == False:
+                        return False
+                else:
+                    if colors[neigh] == color:
+                        return False
+            
+            return True
+        
         for i in range(n):
             if colors[i] == -1:
-                if bfs(i) == False:
+                if dfs(i, 0) == False:
                     return False
-        return True 
+        return True
 
