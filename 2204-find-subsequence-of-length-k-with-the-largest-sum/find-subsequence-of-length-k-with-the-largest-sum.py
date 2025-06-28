@@ -1,5 +1,11 @@
 class Solution:
     def maxSubsequence(self, nums: List[int], k: int) -> List[int]:
+
+        """
+        This is not the best solution at all. 
+        Not ideal for 0/1 knapsack as it is a overkill. 
+        sorting and picking top k elements is better approach. 
+        """
         n = len(nums)
         # Memoization table: dp[index][count] = (max_sum, subsequence)
         dp = {}
