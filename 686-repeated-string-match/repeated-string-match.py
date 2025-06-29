@@ -1,10 +1,10 @@
 class Solution:
-    def repeatedStringMatch(self, a: str, b: str) -> int:
+    def repeatedStringMatch2(self, a: str, b: str) -> int:
         """
         1. find all possible starting indices.
         2. if no starting indices -> return -1
         3. for each starting index, find how many times we need to append string. 
-            chars needed = len(b) - len(a) - i - 1
+            chars needed = len(b) - (num chars from start to end)
             num times to append = chars needed//len(a) + 1
             append that many times and check. 
         """
@@ -29,5 +29,26 @@ class Solution:
             if appended_string[start: start + len(b)] == b:
                 return times
         
+        return -1
+
+    # Answer 2:
+        # Append a to itself until len(a) >= len(b)
+        # check for b in a. if yes, return count.
+        # if not, append once more to confirm if b starts from end of a.
+
+    def repeatedStringMatch(self, a: str, b: str) -> int:
+        checker = a[:]
+        count = 1
+        while len(checker) < len(b):
+            checker = checker + a[:]
+            count += 1
+
+        if b in checker:
+            return count
+
+        checker += a
+        if b in checker:
+            return count + 1
+
         return -1
 
