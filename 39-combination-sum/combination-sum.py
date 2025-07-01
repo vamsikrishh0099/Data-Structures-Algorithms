@@ -6,21 +6,19 @@ class Solution:
 
         def helper(ind, candidates, target, cur, ans):
 
-
-            if ind == len(candidates):
-                if target == 0:
-                    ans.append(cur.copy())
-                return 
+            
+            if target == 0:
+                ans.append(cur.copy())
+                return
 
             if target < 0:
                 return
 
-            cur.append(candidates[ind])
-            helper(ind, candidates, target - candidates[ind], cur, ans)
-            cur.pop()
-            helper(ind + 1, candidates, target, cur, ans)
+            for i in range(ind, len(candidates)):
+                cur.append(candidates[i])
+                helper(i, candidates, target - candidates[i], cur, ans)
+                cur.pop()
+                
 
         helper(0, candidates, target, cur, ans)
         return ans
-
-                
