@@ -12,8 +12,6 @@ class Solution:
             ans.append(cur.copy())
             return
 
-        if ind == len(candidates):
-            return
 
         for i in range(ind, len(candidates)):
 
@@ -22,7 +20,7 @@ class Solution:
             num = candidates[i]
             if num > target:
                 break
-
+            
             cur.append(num)
             self.helper(i + 1, candidates, cur, target - num, ans)
             cur.pop()
