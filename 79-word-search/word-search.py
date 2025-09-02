@@ -1,10 +1,11 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         
+        vis = [[False]*len(board[0]) for _ in range(len(board))]
         for i in range(len(board)):
             for j in range(len(board[0])):
                 if board[i][j] == word[0]:
-                    vis = [[False]*len(board[0]) for _ in range(len(board))]
+                    
                     if (len(word) == 1 or self.dfs(board, word, i, j, 1, vis)):
                         return True
 
