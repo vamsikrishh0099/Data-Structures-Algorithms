@@ -1,29 +1,33 @@
 class Solution:
-    def exist(self, grid: List[List[str]], word: str) -> bool:
+    def exist(self, board: List[List[str]], word: str) -> bool:
         
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j] == word[0]:
-                    vis = [[-1]*len(grid[0]) for _ in range(len(grid))]
-                    
-                    if (self.dfs(grid, i, j, word, 1, vis) or len(word) == 1):
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == word[0]:
+                    vis = [[False]*len(board[0]) for _ in range(len(board))]
+                    if (len(word) == 1 or self.dfs(board, word, i, j, 1, vis)):
                         return True
-        return False 
 
-    def dfs(self, grid, i, j, word, char_at, vis):
+        return False
 
-        if char_at == len(word):
+    def dfs(self, board, word, i, j, char_ind, vis):
+        
+        if len(word) == char_ind:
             return True
-         
-        vis[i][j] = 1
+
+        vis[i][j] = True
+
         steps = [[0,1], [1,0], [-1,0], [0,-1]]
 
         for step in steps:
             x = i + step[0]
             y = j + step[1]
 
-            if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] == word[char_at] and vis[x][y] == -1:
-                if self.dfs(grid, x, y, word, char_at+1, vis):
+            if 0 <= x < len(board) and 0 <= y < len(board[0]) and board[x][y] == word[char_ind] and not vis[x][y]:
+                if self.dfs(board, word, x, y, char_ind + 1, vis):
                     return True
+        
+        vis[i][j] = False
 
-        vis[i][j] = -1
+
+
