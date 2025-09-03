@@ -1,1 +1,1 @@
-<h2>binary-tree-maximum-path-sum Notes</h2><hr>[ Time taken: 16 m 59 s ]
+<h2>binary-tree-maximum-path-sum Notes</h2><hr>[ Time taken: 7 m 42 s ]
